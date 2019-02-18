@@ -12,7 +12,8 @@ This assignment is meant for recruitment purposes for Adera AS
   * createdAt: the date and time of the revenue
   * paidAt: the date and time of the cash flow
 * Git is part of the exercise, commit sizes and comments matter
-* Let us known when you are finished by sending a mail, after the assessment is complete the fork should be deleted (Keeping a local copy is not a problem, but getting a list of completed assignments by looking at the forks will render it useless for other candidates)
+* Let us known when you are finished by sending an mail.
+* After the assessment is complete, the fork should be deleted (Keeping a local copy is not a problem, but getting a list of completed assignments by looking at the forks will render it useless for other candidates)
 
 ## Tasks
 1. Create a fork of this repository where you make all your changes
