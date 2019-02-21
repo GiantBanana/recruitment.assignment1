@@ -1,11 +1,27 @@
 ﻿$(document).ready(function () {
+
+    loadDefaultChart();
+
+    $(".datePicker").datepicker();
+
+    $("#showHistogram").change(function() {
+        if ($(this).is(":checked")) {
+            $(".datePicker").removeAttr("disabled");
+        } else {
+            $(".datePicker").attr("disabled",true);
+
+        }
+    });
+});
+
+function loadDefaultChart() {
     $.ajax({
         url: "CompareRevenueAndCash",
         type: "GET",
         timeout: 30000,
-        error: function() {
+        error: function () {
         },
-        success: function(msg) {
+        success: function (msg) {
             console.log(msg);
             var ctx = document.getElementById("myChart").getContext('2d');
             var myChart = new Chart(ctx, {
@@ -38,9 +54,4 @@
             });
         }
     });
-
-    
-
-
-
-});
+}

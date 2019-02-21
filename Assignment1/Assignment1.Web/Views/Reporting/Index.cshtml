@@ -3,6 +3,63 @@
     ViewData["Title"] = "Index";
 }
 
-<canvas id="myChart"></canvas>
+<link rel="stylesheet" href="~/css/charts.css" />
+
+
+<div class="chart-container">
+    <canvas id="myChart"></canvas>
+</div>
+
+
+<button type="button" class="btn btn-primary chartSettingsModalButton" data-toggle="modal" data-target="#chartSettingsModal">
+    Chart Settings
+</button>
+
+
+<div class="modal fade" id="chartSettingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chart Settings</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="chart-toolbar-container">
+                    <form class="chart-toolbar">
+                        <div class="form-group">
+                            <label for="selectOverview">Select Overview</label>
+                            <select class="form-control" id="selectOverview">
+                                <option>Revenue VS. Cash Flow</option>
+                                <option>Free transactions count</option>
+                                <option>Paid transactions count</option>
+                                <option>Credit transactions count</option>
+                            </select>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="showHistogram">
+                            <label class="form-check-label" for="showHistogram">Show histogram</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="fromDate">From</label><br />
+                            <input type="text" id="fromDate" class="datePicker" disabled="">
+                        </div>
+                        <div class="form-group">
+                            <label for="toDate">To</label><br/>
+                            <input type="text" id="toDate" class="datePicker" disabled="">
+                        </div>
+
+                    </form>
+
+                </div>            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="~/js/querydata.js" asp-append-version="true"></script>
