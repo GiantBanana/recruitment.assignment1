@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Assignment1.Web.Business;
+using Assignment1.Web.Models;
+using Assignment1.Web.Repository;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +32,8 @@ namespace Assignment1.Web
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddScoped<IGetData<TransactionModel>, GetDataFromJson<TransactionModel>>();
+            services.AddScoped<QueryData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +51,10 @@ namespace Assignment1.Web
                 app.UseHsts();
             }
 
+            string baseDir = env.ContentRootPath;
+
+            AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.Combine(baseDir, "App_Data"));
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -54,6 +64,9 @@ namespace Assignment1.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "CompareRevenueAndCash",
+                    template: "{controller=Reporting}/{action=CompareCashFlowAndRevenue}");
             });
         }
     }

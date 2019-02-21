@@ -10,55 +10,61 @@
     <link rel="stylesheet" href="~/css/navigation.css" />
     <link rel="stylesheet" href="~/css/banner.css" />
     <link rel="stylesheet" href="~/css/main-content.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 
 
 
 </head>
 <body>
-<header>
-    
-    <div class="banner">
+    <header>
 
-        <a class="" asp-area="" asp-controller="Home" asp-action="Index">Adera AS</a>
+        <div class="banner">
 
-    </div>
-    
+            <a class="" asp-area="" asp-controller="Home" asp-action="Index">Adera AS</a>
 
-    <div class="sidenav">
-        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a class="" asp-area="" asp-controller="Home" asp-action="Index" url="Home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="" asp-area="" asp-controller="Home" asp-action="Privacy" url="Privacy">Privacy</a>
-                </li>
-            </ul>
         </div>
-    </div>
-</header>
 
-<div class="main-content-and-footer-container">
-    <div class="main-content-container container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer">
-        <div class="container">
-            &copy; 2019 - Adera AS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="sidenav">
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="" asp-area="" asp-controller="Home" asp-action="Index" url="Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="" asp-area="" asp-controller="Home" asp-action="Privacy" url="Privacy">Privacy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="" asp-area="" asp-controller="Reporting" asp-action="Index" url="Reporting">Reporting</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </footer>
+    </header>
 
-</div>
+    <div class="main-content-and-footer-container">
+        <div class="main-content-container container">
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="border-top footer">
+            <div class="container">
+                &copy; 2019 - Adera AS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+
+    </div>
 
 
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/navigation.js" asp-append-version="true"></script>
+
 
 
     @RenderSection("Scripts", required: false)

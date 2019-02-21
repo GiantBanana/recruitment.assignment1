@@ -7,9 +7,7 @@
     left: 0;
     background-color: #807E7F;
     overflow-x: hidden;
-    padding-top: 20px;
     margin: 0;
-    padding: 0;
 }
 
 .sidenav a {
@@ -17,7 +15,6 @@
     text-decoration: none;
     color: white;
     display: block;
-    padding-left: 25%;
 }
 
 .sidenav a:hover {
