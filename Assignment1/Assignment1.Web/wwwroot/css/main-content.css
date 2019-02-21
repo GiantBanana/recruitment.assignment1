@@ -1,0 +1,16 @@
+﻿.main-content-and-footer-container {
+    min-height: 90%;
+    width: 88%;
+    margin: 0;
+    padding: 0;
+    left: 12%;
+    top: 10%;
+    position: absolute;
+}
+
+.main-content-and-footer-container .main-content-container {
+    height: auto;
+    min-height: 80vh;
+    margin: 0;
+    padding: 0;
+}

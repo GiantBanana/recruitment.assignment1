@@ -1,0 +1,35 @@
+﻿.sidenav {
+    height: 90%;
+    width: 12%;
+    position: fixed;
+    z-index: 1;
+    top: 10%;
+    left: 0;
+    background-color: #807E7F;
+    overflow-x: hidden;
+    padding-top: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.sidenav a {
+    font-size: 2em;
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding-left: 25%;
+}
+
+.sidenav a:hover {
+    color: darkblue;
+}
+
+.sidenav .activeMenuItem {
+    color: darkblue;
+}
+
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
