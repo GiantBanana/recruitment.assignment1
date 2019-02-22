@@ -29,11 +29,18 @@ namespace Assignment1.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.Configure<DateTimeSettings>(Configuration);
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IGetData<TransactionModel>, GetDataFromJson<TransactionModel>>();
             services.AddScoped<QueryData>();
+            services.AddScoped<ConvertFromStringToDateTimeObject>();
+            services.AddScoped<ConvertFromDateTimeObjectsToString>();
+            services.AddScoped<GetTimeSeriesDataSet>();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +74,9 @@ namespace Assignment1.Web
                 routes.MapRoute(
                     name: "CompareRevenueAndCash",
                     template: "{controller=Reporting}/{action=CompareCashFlowAndRevenue}");
+                routes.MapRoute(
+                    name: "UpdateChart",
+                    template: "{controller=Reporting}/{action=UpdateChart}");
             });
         }
     }
