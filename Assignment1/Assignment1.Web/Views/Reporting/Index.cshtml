@@ -43,17 +43,23 @@
                             <input type="text" id="fromDate" class="datePicker" name="FromDate">
                         </div>
                         <div class="form-group">
-                            <label for="toDate">To</label><br/>
+                            <label for="toDate">To</label><br />
                             <input type="text" id="toDate" class="datePicker" name="ToDate">
                         </div>
-                        
-                    </form>
-                    
-                    
 
-                </div>   
+                    </form>
+
+
+
+                </div>
                 <div class="alert alert-primary" role="alert" id="loadingAlert">
                     Loading chart......
+                </div>
+                <div class="alert alert-danger fade show" role="alert" id="datesCannotBeEmptyAlert">
+                    <strong>Attention!</strong> Dates cannot be empty for this chart.
+                </div>
+                <div class="alert alert-danger fade show" role="alert" id="fromDateMustBeBeforeAlert">
+                    <strong>Attention!</strong> From date must be before to date.
                 </div>
             </div>
             <div class="modal-footer">
@@ -64,5 +70,5 @@
     </div>
 </div>
 
-
+<script src="~/js/formControl.js" asp-append-version="true"></script>
 <script src="~/js/chartControl.js" asp-append-version="true"></script>

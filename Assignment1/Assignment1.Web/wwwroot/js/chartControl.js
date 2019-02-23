@@ -8,6 +8,14 @@
 
 
     $("#updateChartButton").click(function () {
+
+        $(".alert").hide();
+
+        if (!datesCannotBeNull() || !startDateMustBeBeforeEndDate()) {
+            return;
+        }
+
+
         var dataType = 'application/x-www-form-urlencoded; charset=utf-8';
         var data = $('form').serialize();
 
