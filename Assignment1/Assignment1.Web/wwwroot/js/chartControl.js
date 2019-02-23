@@ -15,7 +15,9 @@
     });
 });
 
-function loadDefaultChart() {
+
+
+var  loadDefaultChart = function () {
     $.ajax({
         url: "CompareRevenueAndCash",
         type: "GET",
@@ -23,23 +25,29 @@ function loadDefaultChart() {
         error: function () {
         },
         success: function (msg) {
+
+            var labels = new Array();
+            var data = new Array();
+            var colors = new Array();
+
+
+            msg.forEach(function (daySummary) {
+                labels.push(daySummary.date);
+                data.push(daySummary.sum);
+                colors.push(dynamicColors());
+
+            });
+
             resetCanvas();
             var ctx = document.getElementById("results-chart").getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ["Revenue", "Cash Flow"],
+                    labels: labels,
                     datasets: [{
                         label: "Revenue vs Cash Flow",
-                        data: [msg[0], msg[1]],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)'
-                        ],
+                        data: data,
+                        backgroundColor: colors,
                         borderWidth: 1
                     }]
                 },
@@ -72,29 +80,24 @@ var updateChart = function (dataType, data) {
 
         },
         success: function (msg) {
-            var dates = new Array();
-            var sums = new Array();
-            var colors = new Array();
-
+            var labels = new Array();
+            var data = new Array();
 
             msg.forEach(function (daySummary) {
-                dates.push(daySummary.date);
-                sums.push(daySummary.sum);
-                colors.push(dynamicColors());
-
+                labels.push(daySummary.date);
+                data.push(daySummary.sum);
             });
 
             resetCanvas();
 
             var ctx = document.getElementById("results-chart").getContext('2d');
-
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: dates,
+                    labels: labels,
                     datasets: [{
                         label: $("#selectView").find(":selected").text(),
-                        data: sums,
+                        data: data,
                         backgroundColor: "rgb(66, 133, 244)"
                     }]
                 },

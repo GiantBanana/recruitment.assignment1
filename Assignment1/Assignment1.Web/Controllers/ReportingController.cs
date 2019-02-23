@@ -9,14 +9,17 @@ namespace Assignment1.Web.Controllers
 {
     public class ReportingController : Controller
     {
-        private readonly QueryData queryData;
+        private readonly GetRevenueAllTime getRevenue;
+        private readonly GetCashFlowAllTime getCashFlow;
         private readonly GetTimeSeriesDataSet getTimeSeries;
 
         public ReportingController(
-            QueryData queryData, 
+            GetRevenueAllTime getRevenue,
+            GetCashFlowAllTime getCashFlow,
             GetTimeSeriesDataSet getTimeSeries)
         {
-            this.queryData = queryData;
+            this.getRevenue = getRevenue;
+            this.getCashFlow = getCashFlow;
             this.getTimeSeries = getTimeSeries;
         }
         public IActionResult Index()
@@ -27,11 +30,14 @@ namespace Assignment1.Web.Controllers
         [HttpGet("CompareRevenueAndCash")]
         public IActionResult CompareCashFlowAndRevenue()
         {
-            List<Decimal> result = new List<Decimal>();
-            result.Add(queryData.GetSumAllTransactions());
-            result.Add(queryData.GetSumPaidTransactions());
+            var dateSummaryModels = new List<DateSummaryModel>()
+            {
+                (DateSummaryModel)getRevenue.GetTotal(),
+                (DateSummaryModel)getCashFlow.GetTotal()
+            };
 
-            return new ObjectResult(result);
+
+            return new ObjectResult(dateSummaryModels);
         }
 
         [HttpPost("UpdateChart")]

@@ -34,7 +34,8 @@ namespace Assignment1.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IGetData<TransactionModel>, GetDataFromJson<TransactionModel>>();
-            services.AddScoped<QueryData>();
+            services.AddScoped<GetRevenueAllTime>();
+            services.AddScoped<GetCashFlowAllTime>();
             services.AddScoped<ConvertFromStringToDateTimeObject>();
             services.AddScoped<ConvertFromDateTimeObjectsToString>();
             services.AddScoped<GetTimeSeriesDataSet>();
