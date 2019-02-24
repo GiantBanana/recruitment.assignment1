@@ -38,8 +38,8 @@ namespace Assignment1.Web
             services.AddScoped<GetCashFlowAllTime>();
             services.AddScoped<ConvertFromStringToDateTimeObject>();
             services.AddScoped<ConvertFromDateTimeObjectsToString>();
-            services.AddScoped<GetQuarterlyReport>();
-            services.AddScoped<GetTimeSeriesDataSet>();
+            services.AddScoped<IGetDataSet<FiscalQuarterSummaryModel>,GetQuarterlyReport>();
+            services.AddScoped<IGetDataSet<DateSummaryModel>,GetTimeSeriesDataSet>();
 
 
 

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Assignment1.Web.Models;
 using Microsoft.Extensions.Options;
 

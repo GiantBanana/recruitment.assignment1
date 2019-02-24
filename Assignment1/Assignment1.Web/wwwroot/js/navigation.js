@@ -11,6 +11,5 @@
     $(".sidenav a").removeClass("activeMenuItem");
     $(".sidenav a[url='" + url + "']").addClass("activeMenuItem");
 
-    console.log(url);
 
 });

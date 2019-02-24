@@ -2,7 +2,6 @@
     $(".alert").hide();
     setUpDatePicker();
     $("#selectView").change(function () {
-        console.log("#########################1");
         setUpDatePicker();
     });
 
@@ -26,8 +25,6 @@ var startDateMustBeBeforeEndDate = function () {
     const fromDate = new Date($("#fromDate").val());
     const toDate = new Date($("#toDate").val());
 
-    console.log(fromDate);
-    console.log(toDate);
 
 
     if (fromDate >= toDate) {
@@ -77,6 +74,5 @@ var setUpDatePicker = function()
             break;
     }
     $(".datePicker").datepicker("refresh");
-
 
 }

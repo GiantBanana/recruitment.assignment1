@@ -9,14 +9,14 @@ namespace Assignment1.Web.Controllers
     {
         private readonly GetRevenueAllTime _getRevenue;
         private readonly GetCashFlowAllTime _getCashFlow;
-        private readonly GetTimeSeriesDataSet _getTimeSeries;
-        private readonly GetQuarterlyReport _getQuarterlyReport;
+        private readonly IGetDataSet<DateSummaryModel> _getTimeSeries;
+        private readonly IGetDataSet<FiscalQuarterSummaryModel> _getQuarterlyReport;
 
         public ReportingController(
             GetRevenueAllTime getRevenue,
             GetCashFlowAllTime getCashFlow,
-            GetTimeSeriesDataSet getTimeSeries,
-            GetQuarterlyReport getQuarterlyReport)
+            IGetDataSet<DateSummaryModel> getTimeSeries,
+            IGetDataSet<FiscalQuarterSummaryModel> getQuarterlyReport)
         {
             this._getRevenue = getRevenue;
             this._getCashFlow = getCashFlow;
