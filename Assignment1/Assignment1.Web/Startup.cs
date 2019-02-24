@@ -38,7 +38,9 @@ namespace Assignment1.Web
             services.AddScoped<GetCashFlowAllTime>();
             services.AddScoped<ConvertFromStringToDateTimeObject>();
             services.AddScoped<ConvertFromDateTimeObjectsToString>();
+            services.AddScoped<GetQuarterlyReport>();
             services.AddScoped<GetTimeSeriesDataSet>();
+
 
 
 
@@ -78,6 +80,9 @@ namespace Assignment1.Web
                 routes.MapRoute(
                     name: "UpdateChart",
                     template: "{controller=Reporting}/{action=UpdateChart}");
+                routes.MapRoute(
+                    name: "QuarterlyReport",
+                    template: "{controller=Reporting}/{action=QuarterlyReport}");
             });
         }
     }

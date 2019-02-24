@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Assignment1.Web.Models;
+﻿using Assignment1.Web.Models;
 using Assignment1.Web.Repository;
 
 namespace Assignment1.Web.Business
 {
     public class GetCashFlowAllTime : IGetSummaryTotal
     {
-        private readonly IGetData<TransactionModel> getData;
+        private readonly IGetData<TransactionModel> _getData;
 
         public GetCashFlowAllTime(IGetData<TransactionModel> getData)
         {
-            this.getData = getData;
+            this._getData = getData;
         }
 
         public object GetTotal()
         {
-            var transactions = getData.GetData();
+            var transactions = _getData.GetData();
 
             var dateSummary = new DateSummaryModel(
                     "CashFlowAllTime"

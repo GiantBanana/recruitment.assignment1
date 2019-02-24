@@ -2,24 +2,27 @@
 
     loadDefaultChart();
 
-    $(".datePicker").datepicker();
-    $(".datePicker").datepicker("option", "dateFormat", "yy-mm-dd");
-    $("#loadingAlert").hide();
-
-
     $("#updateChartButton").click(function () {
+        const view = $("#selectView").find(":selected");
 
         $(".alert").hide();
-
         if (!datesCannotBeNull() || !startDateMustBeBeforeEndDate()) {
             return;
         }
 
 
-        var dataType = 'application/x-www-form-urlencoded; charset=utf-8';
-        var data = $('form').serialize();
+        const  dataType = 'application/x-www-form-urlencoded; charset=utf-8';
+        const data = $('form').serialize();
 
-        updateChart(dataType, data);
+        switch (Number(view.val())) {
+            case 4:
+                getQuarterlyReport(dataType, data, view.text());
+                break;
+            default:
+                updateChart(dataType, data, view.text());
+                break;
+        }
+
     });
 });
 
@@ -40,15 +43,15 @@ var  loadDefaultChart = function () {
 
 
             msg.forEach(function (daySummary) {
-                labels.push(daySummary.date);
+                labels.push(daySummary.timePeriod);
                 data.push(daySummary.sum);
                 colors.push(dynamicColors());
 
             });
 
             resetCanvas();
-            var ctx = document.getElementById("results-chart").getContext('2d');
-            var myChart = new Chart(ctx, {
+            const  ctx = document.getElementById("results-chart").getContext('2d');
+            const  myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
@@ -73,7 +76,7 @@ var  loadDefaultChart = function () {
     });
 }
 
-var updateChart = function (dataType, data) {
+var updateChart = function (dataType, data, chartLabel) {
     $("#loadingAlert").fadeTo(2000, 500).slideUp(500, function () {
         $("#loadingAlert").slideUp(500);
     });
@@ -92,19 +95,19 @@ var updateChart = function (dataType, data) {
             var data = new Array();
 
             msg.forEach(function (daySummary) {
-                labels.push(daySummary.date);
+                labels.push(daySummary.timePeriod);
                 data.push(daySummary.sum);
             });
 
             resetCanvas();
 
-            var ctx = document.getElementById("results-chart").getContext('2d');
-            var myChart = new Chart(ctx, {
+            const  ctx = document.getElementById("results-chart").getContext('2d');
+            const  myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: $("#selectView").find(":selected").text(),
+                        label: chartLabel,
                         data: data,
                         backgroundColor: "rgb(66, 133, 244)"
                     }]
@@ -122,6 +125,59 @@ var updateChart = function (dataType, data) {
         }
     });
 }
+
+
+var getQuarterlyReport = function (dataType, data, chartLabel) {
+
+    $.ajax({
+        url: "QuarterlyReport",
+        type: "POST",
+        dataType: "json",
+        contentType: dataType,
+        data: data,
+        timeout: 30000,
+        error: function () {
+
+        },
+        success: function (msg) {
+            var labels = new Array();
+            var data = new Array();
+            var colors = new Array();
+
+
+            msg.forEach(function (quarterSummary) {
+                labels.push(quarterSummary.label);
+                data.push(quarterSummary.sum);
+                colors.push(dynamicColors());
+
+            });
+
+            resetCanvas();
+
+            const ctx = document.getElementById("results-chart").getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: chartLabel + " " + msg[0].timePeriod,
+                        data: data,
+                        backgroundColor: colors
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    });
+};
 
 var resetCanvas = function () {
     $("#results-chart").remove();

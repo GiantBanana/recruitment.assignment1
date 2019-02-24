@@ -7,36 +7,35 @@ namespace Assignment1.Web.Business
 {
     public class GetTimeSeriesDataSet : IGetDataSet<DateSummaryModel>
     {
-        private readonly ConvertFromStringToDateTimeObject convertFromStringToDate;
-        private readonly ConvertFromDateTimeObjectsToString convertFromDateTimeToString;
-        private readonly IGetData<TransactionModel> getData;
+        private readonly ConvertFromStringToDateTimeObject _fromStringToDate;
+        private readonly ConvertFromDateTimeObjectsToString _fromDateTimeToString;
+        private readonly IGetData<TransactionModel> _getData;
 
 
 
         public GetTimeSeriesDataSet(
-            ConvertFromStringToDateTimeObject convertFromStringToDate, 
-            ConvertFromDateTimeObjectsToString convertFromDateTimeToString, 
+            ConvertFromStringToDateTimeObject fromStringToDate, 
+            ConvertFromDateTimeObjectsToString fromDateTimeToString, 
             IGetData<TransactionModel> getData)
         {
-            this.convertFromStringToDate = convertFromStringToDate;
-            this.convertFromDateTimeToString = convertFromDateTimeToString;
-            this.getData = getData;
+            this._fromStringToDate = fromStringToDate;
+            this._fromDateTimeToString = fromDateTimeToString;
+            this._getData = getData;
         }
 
         public List<DateSummaryModel> GetDataSet(object containsDate)
         {
             var requestParameters = (RequestParametersModel) containsDate;
-            var fromDate = (DateTime) convertFromStringToDate.ProcessDate(requestParameters.FromDate);
-            var fromDateCopy = (DateTime)convertFromStringToDate.ProcessDate(requestParameters.FromDate);
-            var toDate = (DateTime) convertFromStringToDate.ProcessDate(requestParameters.ToDate);
-
+            var fromDate = (DateTime) _fromStringToDate.ProcessDate(requestParameters.FromDate);
+            var fromDateCopy = (DateTime)_fromStringToDate.ProcessDate(requestParameters.FromDate);
+            var toDate = (DateTime) _fromStringToDate.ProcessDate(requestParameters.ToDate);
             var dateSummaryModels = new List<DateSummaryModel>();
     
 
             for (var i = fromDate.Date.Ticks; i <= toDate.Date.Ticks; i+=TimeSpan.TicksPerDay)
             {
                 dateSummaryModels.Add(new DateSummaryModel(
-                    (string) convertFromDateTimeToString.ProcessDate(fromDate.AddTicks(i - fromDate.Ticks))
+                    (string) _fromDateTimeToString.ProcessDate(fromDate.AddTicks(i - fromDate.Ticks))
                         
                     ));
 
@@ -64,7 +63,7 @@ namespace Assignment1.Web.Business
 
         private List<DateSummaryModel> GetCashFlowTimeSeries(List<DateSummaryModel> dateSummaryModels)
         {
-            var transactionModels = getData.GetData();
+            var transactionModels = _getData.GetData();
             var dateTime1 = new DateTime();
             var dateTime2 = new DateTime();
 
@@ -74,11 +73,11 @@ namespace Assignment1.Web.Business
 
                 if (transactionModel.PaidAt != null)
                 {
-                    dateTime1 = (DateTime)convertFromStringToDate.ProcessDate(transactionModel.GetPaidAtDateOnly());
+                    dateTime1 = (DateTime)_fromStringToDate.ProcessDate(transactionModel.GetPaidAtDateOnly());
 
                     foreach (var dateSummaryModel in dateSummaryModels)
                     {
-                        dateTime2 = (DateTime)convertFromStringToDate.ProcessDate(dateSummaryModel.Date);
+                        dateTime2 = (DateTime)_fromStringToDate.ProcessDate(dateSummaryModel.TimePeriod);
 
                         if (dateTime1.Date.Ticks == dateTime2.Date.Ticks)
                         {
@@ -96,7 +95,7 @@ namespace Assignment1.Web.Business
 
         private List<DateSummaryModel> GetFreeTransactionsTimeSeries(List<DateSummaryModel> dateSummaryModels)
         {
-            var transactionModels = getData.GetData();
+            var transactionModels = _getData.GetData();
             var dateTime1 = new DateTime();
             var dateTime2 = new DateTime();
 
@@ -106,11 +105,11 @@ namespace Assignment1.Web.Business
 
                 if (transactionModel.PaidAt != null)
                 {
-                    dateTime1 = (DateTime)convertFromStringToDate.ProcessDate(transactionModel.GetPaidAtDateOnly());
+                    dateTime1 = (DateTime)_fromStringToDate.ProcessDate(transactionModel.GetPaidAtDateOnly());
 
                     foreach (var dateSummaryModel in dateSummaryModels)
                     {
-                        dateTime2 = (DateTime)convertFromStringToDate.ProcessDate(dateSummaryModel.Date);
+                        dateTime2 = (DateTime)_fromStringToDate.ProcessDate(dateSummaryModel.TimePeriod);
 
                         if (dateTime1.Date.Ticks == dateTime2.Date.Ticks && transactionModel.Total == 0)
                         {
@@ -126,9 +125,8 @@ namespace Assignment1.Web.Business
 
         private List<DateSummaryModel> GetPaidTransactionsTimeSeries(List<DateSummaryModel> dateSummaryModels)
         {
-            var transactionModels = getData.GetData();
-            var dateTime1 = new DateTime();
-            var dateTime2 = new DateTime();
+            var transactionModels = _getData.GetData();
+
 
 
             foreach (var transactionModel in transactionModels)
@@ -136,11 +134,11 @@ namespace Assignment1.Web.Business
 
                 if (transactionModel.PaidAt != null)
                 {
-                    dateTime1 = (DateTime)convertFromStringToDate.ProcessDate(transactionModel.GetPaidAtDateOnly());
+                    var dateTime1 = (DateTime)_fromStringToDate.ProcessDate(transactionModel.GetPaidAtDateOnly());
 
                     foreach (var dateSummaryModel in dateSummaryModels)
                     {
-                        dateTime2 = (DateTime)convertFromStringToDate.ProcessDate(dateSummaryModel.Date);
+                        var dateTime2 = (DateTime)_fromStringToDate.ProcessDate(dateSummaryModel.TimePeriod);
 
                         if (dateTime1.Date.Ticks == dateTime2.Date.Ticks && transactionModel.Total > 0)
                         {
@@ -157,7 +155,7 @@ namespace Assignment1.Web.Business
 
         private List<DateSummaryModel> GetCreditTransactionsTimeSeries(List<DateSummaryModel> dateSummaryModels)
         {
-            var transactionModels = getData.GetData();
+            var transactionModels = _getData.GetData();
             var dateTime1 = new DateTime();
             var dateTime2 = new DateTime();
 
@@ -165,11 +163,11 @@ namespace Assignment1.Web.Business
             foreach (var transactionModel in transactionModels)
             {
 
-                dateTime1 = (DateTime)convertFromStringToDate.ProcessDate(transactionModel.GetCreatedAtDateOnly());
+                dateTime1 = (DateTime)_fromStringToDate.ProcessDate(transactionModel.GetCreatedAtDateOnly());
 
                 foreach (var dateSummaryModel in dateSummaryModels)
                 {
-                    dateTime2 = (DateTime)convertFromStringToDate.ProcessDate(dateSummaryModel.Date);
+                    dateTime2 = (DateTime)_fromStringToDate.ProcessDate(dateSummaryModel.TimePeriod);
 
                     if (dateTime1.Date.Ticks == dateTime2.Date.Ticks && transactionModel.Total < 0)
                     {

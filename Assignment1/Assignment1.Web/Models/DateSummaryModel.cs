@@ -5,15 +5,13 @@ using System.Threading.Tasks;
 
 namespace Assignment1.Web.Models
 {
-    public class DateSummaryModel
+    public class DateSummaryModel : TimePeriodSummaryModel
     {
-        public string Date { get; set; }
-        public Decimal Sum { get; set; }
 
-        public DateSummaryModel(string date)
-        {
-            this.Date = date;
-            this.Sum = 0;
-        }
+    public DateSummaryModel(string date)
+    {
+        this.TimePeriod = date;
+        this.Sum = 0;
+    }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using Assignment1.Web.Business;
 using Assignment1.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,18 +7,21 @@ namespace Assignment1.Web.Controllers
 {
     public class ReportingController : Controller
     {
-        private readonly GetRevenueAllTime getRevenue;
-        private readonly GetCashFlowAllTime getCashFlow;
-        private readonly GetTimeSeriesDataSet getTimeSeries;
+        private readonly GetRevenueAllTime _getRevenue;
+        private readonly GetCashFlowAllTime _getCashFlow;
+        private readonly GetTimeSeriesDataSet _getTimeSeries;
+        private readonly GetQuarterlyReport _getQuarterlyReport;
 
         public ReportingController(
             GetRevenueAllTime getRevenue,
             GetCashFlowAllTime getCashFlow,
-            GetTimeSeriesDataSet getTimeSeries)
+            GetTimeSeriesDataSet getTimeSeries,
+            GetQuarterlyReport getQuarterlyReport)
         {
-            this.getRevenue = getRevenue;
-            this.getCashFlow = getCashFlow;
-            this.getTimeSeries = getTimeSeries;
+            this._getRevenue = getRevenue;
+            this._getCashFlow = getCashFlow;
+            this._getTimeSeries = getTimeSeries;
+            this._getQuarterlyReport = getQuarterlyReport;
         }
         public IActionResult Index()
         {
@@ -32,8 +33,8 @@ namespace Assignment1.Web.Controllers
         {
             var dateSummaryModels = new List<DateSummaryModel>()
             {
-                (DateSummaryModel)getRevenue.GetTotal(),
-                (DateSummaryModel)getCashFlow.GetTotal()
+                (DateSummaryModel)_getRevenue.GetTotal(),
+                (DateSummaryModel)_getCashFlow.GetTotal()
             };
 
 
@@ -44,9 +45,16 @@ namespace Assignment1.Web.Controllers
         public IActionResult UpdateChart(RequestParametersModel parameters)
         {
 
-            var dateSummaryModels = getTimeSeries.GetDataSet(parameters);
+            var dateSummaryModels = _getTimeSeries.GetDataSet(parameters);
 
             return new ObjectResult(dateSummaryModels);
+        }
+
+        [HttpPost("QuarterlyReport")]
+        public IActionResult QuarterlyReport(RequestParametersModel parameters)
+        {
+
+            return new ObjectResult(_getQuarterlyReport.GetDataSet(parameters));
         }
     }
 }
